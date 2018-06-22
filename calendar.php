@@ -30,71 +30,25 @@
 	</head>
 	<body>
 		<div align='center'>
-			<?php 
-				if(isset($_GET['y']) && ($_GET['y'])!='') :
-					if($_GET['y']=='pre'):
-						//上年 故 初始年份 - 1
-						$pre_year = --$current_year;
-						//取得上一年 該月份 第 1 天是星期幾 0 ~ 7 表示
-						//註:這是年份往前算 ，月份不用改變
-						$mktime = date('w',mktime(0,0,0,$current_month,1,$pre_year));
-						$week_day = date('w',$mktime);
-
-					elseif($_GET['y']=='next'):
-						//下年 初始年份 + 1
-						$next_year = ++ $current_year; 
-						//取得下一年 該月份 第 1 天是星期幾 0 ~ 7 表示
-						//註:這是年份往後算 ，月份不用改變
-						$mktime = mktime(0,0,0,$current_month,1,$next_year);
-						$week_day = date('w',$mktime);
-
-					else:	return false;
-					
-			?>
-					<?php endif;//第二層 if 結束 ?>
-
-					<p style="font-size:100px">
-						<?php echo $current_year.' 年 '. $current_month.' 月 ';?>
-					</p>
-					<table>
-						<tr style="font-size:75px;">
-							<th style="color:red;">日</th>
-							<th>一</th>
-							<th>二</th>
-							<th>三</th>
-							<th>四</th>
-							<th>五</th>
-							<th>六</th>
-						</tr>		
-					<?php
-						//處理完第二層 if 判斷 就 載入月曆
-						calendar_table($month_day, $week_day);
-					?>
-					</table>
-
-					
-			<?php else: ?>
-					<p style="font-size:100px">
-						<?php echo $current_year.' 年 '. $current_month.' 月 ';?>
-					</p>
-					<table>
-						<tr style="font-size:75px;">
-							<th style="color:red;">日</th>
-							<th>一</th>
-							<th>二</th>
-							<th>三</th>
-							<th>四</th>
-							<th>五</th>
-							<th>六</th>
-						</tr>
-				
-			<?php 
-				//預設網頁載入時，使用者沒有按任何按鈕，直接載入當前日期的月曆
-				calendar_table($month_day, $week_day); 
-				
-				endif;//第一層 if 結束;
-			?>
-					</table>
+			<p style="font-size:100px">
+                <?php echo $current_year.' 月 '. $current_month.' 月 ';?>
+            </p>
+            <table>
+                <tr style="font-size:75px;">
+                    <th style="color:red;">日</th>
+                    <th>一</th>
+                    <th>二</th>
+                    <th>三</th>
+                    <th>四</th>
+                    <th>五</th>
+                    <th>六</th>
+                    </tr>		
+            <?php
+                    //處理完第二層 if 判斷 就 載入月曆
+                    //註:只有月份往前算 ，月份不用改變
+                    calendar_table($month_day, $week_day);
+            ?>
+            </table>
 				
 		</div>
 
