@@ -22,8 +22,8 @@
 			
 			table, th
 			{
-    			border: 1px solid black;
-    			border-radius:5px;
+    				border: 1px solid black;
+    				border-radius:5px;
 			}	
 
 		</style>
@@ -33,22 +33,21 @@
 			<p style="font-size:100px">
                 <?php echo $current_year.' 月 '. $current_month.' 月 ';?>
             </p>
-            <table>
-                <tr style="font-size:75px;">
-                    <th style="color:red;">日</th>
-                    <th>一</th>
-                    <th>二</th>
-                    <th>三</th>
-                    <th>四</th>
-                    <th>五</th>
-                    <th>六</th>
-                    </tr>		
+            	<table>
+                	<tr style="font-size:75px;">
+                    	<th style="color:red;">日</th>
+                    	<th>一</th>
+                    	<th>二</th>
+                    	<th>三</th>
+                    	<th>四</th>
+                    	<th>五</th>
+			<th>六</th>
+			</tr>		
             <?php
-                    //處理完第二層 if 判斷 就 載入月曆
-                    //註:只有月份往前算 ，月份不用改變
+                    //載入月曆
                     calendar_table($month_day, $week_day);
             ?>
-            </table>	
+            </table>		
 		</div>
 		<?php include 'menu.php' ?>
 
