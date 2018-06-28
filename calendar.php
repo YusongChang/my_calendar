@@ -60,6 +60,8 @@
 			日 : <input type="text" class="d">
 			<input class ="submit" type="button" value="submit">
 		</div>
+
+		<!--JS-->
 		<script
   src="https://code.jquery.com/jquery-1.12.4.js"
   integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
