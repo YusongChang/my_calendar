@@ -48,11 +48,38 @@
                     //載入月曆
                     calendar_table($month_day, $week_day);
             ?>
-            	</table>
-				
+            </table>		
 		</div>
-
 		<?php include 'menu.php' ?>
 
+		<div class = solarlunar></div>
+		<div>
+			<hr />
+			年 : <input type="text" class="y">
+			月 : <input type="text" class="m">
+			日 : <input type="text" class="d">
+			<input class ="submit" type="button" value="submit">
+		</div>
+
+		<!--JS-->
+		<script
+  src="https://code.jquery.com/jquery-1.12.4.js"
+  integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+  crossorigin="anonymous"></script>
+		<script src="Solar_Lunar_YearTrans.js"></script>
+		<script>
+			$(document).on("ready",function(){
+
+				$('input.submit').on("click",function (){
+					var y = $('.y').val(),
+						m = $('.m').val(),
+						d = $('.d').val();
+					var lunar = calendar.solar2lunar(y,m,d);
+    			$('div.solarlunar').html('<strong>调用代码示例Demo</strong><br />阳历：'+lunar.cYear + '年' +lunar.cMonth +  '月' + lunar.cDay +'日（'+lunar.astro+'）<br />农历：'+lunar.lYear + '年' +lunar.IMonthCn+lunar.IDayCn+'，'+lunar.gzYear+'年'+lunar.gzMonth+'月'+lunar.gzDay+'日（'+lunar.Animal+'年）'+'<br />');
+				});
+			});
+			
+		</script>
+		
 	</body>
 </html>
