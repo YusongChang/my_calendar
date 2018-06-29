@@ -1,13 +1,25 @@
 <!--處理 使用者 按下 上月或下月 的事件-->
+
 <?php 
     require 'function.php';
+    require 'Solar_Lunar_YearTrans.php';
     //避免使用 require 'calendar.php' ，重新載入 $current_year 會導致計算錯誤
     
     /**
     *判斷 $_GET (上個月 或 下個月) 以及 年分  資料是否存在 
     */ 
-    if((isset($_GET['prem']) || isset($_GET['nextm'])) && isset($_GET['year']))
+    if((isset($_GET['prem']) || isset($_GET['nextm'])) && isset($_GET['year']) && isset($_GET['d']))
     {    //-------初始化-----------
+
+        if(is_numeric($_GET['d'])  ? true : false){
+            $current_day = intval($_GET['d']);
+        }
+        else
+        {
+            //d 非數字
+            header('Location: calendar.php');
+        }
+
         //取得目前年份，並轉換正整數
         if(is_numeric($_GET['year']) && !empty($_GET['year'])){
             $current_year = intval($_GET['year']);
@@ -107,21 +119,36 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
 		<style>
 			
-			table, th
-			{
+			table,th
+			{text-align:center;
     			border: 1px solid black;
     			border-radius:5px;
-			}	
+			}
+
+            .btn
+	        {
+		        font-size:40px;
+		        margin:3px 0 4px 0;
+	        } 
+            
 
 		</style>
 	</head>
 	<body>
 		<div align='center'>
             <p style="font-size:100px">
-                <?php echo $current_year.' 月 '. $current_month.' 月 ';?>
+                <?php echo $current_year.' 年 '. $current_month.' 月 ';?>
             </p>
+            <p align = "center" style="font-size:45px;margin:1px 0 5px 0;">
+                <?php 
+					$lunarDate  = new Gregorian2Lunar($current_year, $current_month, $current_day);
+					$lunarDate->getLunarDateTime();
+				?>
+			</p>
 		    <table>
 			<tr style="font-size:75px;">
 				<th style="color:red;">日</th>
@@ -135,7 +162,7 @@
             <?php
                     //處理完第二層 if 判斷 就 載入月曆
                     //註:只有月份往前算 ，月份不用改變
-                    calendar_table($month_day, $week_day);
+                    calendar_table($month_day, $week_day, $current_day);
             ?>
                   </table>
 		</div>
