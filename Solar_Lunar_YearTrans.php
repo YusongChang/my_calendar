@@ -21,10 +21,12 @@
         private $GregorianMonthsData =[31,28,31,30,31,30,31,31,30,31,30,31];
         //農曆月份個數
         private $monthsInLunarYear = 0;
+        //指定日期的農曆年
+        private $lunarYear = 0;
         //指定日期的農曆月
-        private $currenLunarMonth = 0;
+        private $lunarMonth = 0;
         //指定日期的農曆日
-        private $currenLunarDay = 0;
+        private $lunarDay = 0;
         //農曆壓縮數據
         //二進制 由左至右  1月 ~ 12月 ，1代表 30 天 , 0 代表 29 天
         //0100 1010 1110 0000
@@ -137,8 +139,8 @@
 
                 $m++; //將月份 + 1 補正回來
 
-                $this->currenLunarDay =  $gap + 1;  // +1 就得到 當前的日子
-                $this->currenLunarMonth = $m;
+                $this->lunarDay =  $gap + 1;  // +1 就得到 當前的日子
+                $this->lunarMonth = $m;
                 
             }
             //公曆間隔天數 與 農曆年總天數 的差值 為正數
@@ -156,11 +158,11 @@
                 // gap_days>=0 代表 農曆月份尚未到達 $m++ 公曆月份
                 $m--;
                 //差多少天 + 當前的月份天數 + 1= 指定年的農曆日
-                $this->currenLunarDay =  ($gap + $temp)+1; 
-                $this->currenLunarMonth = $m; 
+                $this->lunarDay =  ($gap + $temp)+1; 
+                $this->lunarMonth = $m; 
             }
-            
-            echo '農曆 '.$y.'年-'.$this->currenLunarMonth.'月-'.$this->currenLunarDay.'日';
+
+            $this->lunarYear = $y;
         }
 
 
@@ -271,6 +273,7 @@
                 // 1 代表 30天 為 true，0 代表 29 天
                 $lunarYearDays+=($this->lunarData[$year] & 0x10000)? 30 : 29;
             }
+
             //計算有幾個 大月 為了 + 回 大月所差的 1 天
             //基準年 二進制 表示 :  10100101111011000
              //1000 0000 0000 0000 用以判斷 月份的天數
@@ -281,6 +284,51 @@
                 $lunarYearDays += ($i & $this->lunarData[$year]) ? 1 : 0;
             }
             return $lunarYearDays;
+        }
+
+
+        /**
+        *農曆日期 轉 漢字
+        */
+        public function getLunarDateTime()
+        {
+            $chWord = ['初','一','二','三','四','五','六','七','八','九','十','廿'];
+            $date="農曆 {$this->lunarYear} 年 ";
+            
+            $this->lunarMonth == 1 ? $date='正月 '  : '';
+
+            if($this->lunarMonth > 10) //獲得 字元 ' 十 '
+            {
+                $m = $this->lunarMonth - 10;
+                $date .='十'.$chWord[$m].' 月 ';   
+            }
+            else
+            {   //若等於 正月 就不顯示月份
+                ($this->lunarMonth <> 1) ? $date.= $chWord[$this->lunarMonth].' 月 ' : '';
+            }
+
+            if($this->lunarDay < 11)
+            {   
+                ($this->lunarMonth == 1) ? $date.=' 初 ' : '';
+                 $date .=$chWord[$this->lunarDay].' 日';
+            }
+            else if($this->lunarDay < 30)
+            {
+                $m = intval($this->lunarDay / 10); //取得天數的 10位數
+                $d =  $this->lunarDay % 10; //取得天數的 個位數'
+               
+                //10位數 轉 為 漢字
+                $date .= ($m == 1) ? '十':'廿';
+                //加上 個位數 的 漢字;
+                $date .= $chWord[$d];
+                $date .=' 日';
+            }
+            else
+            {
+                $date .= '三十 日';
+            }
+            
+            echo $date;
         }
     }#class end
 ?>
