@@ -9,6 +9,7 @@
 	$month_day = date('t');
 	//取得當月的 1 號 是星期幾 0 ~ 7 表示
 	$week_day = date('w',mktime(0,0,0,$current_month,1,$current_year));
+
 ?>
 
 <!DOCTYPE html>
