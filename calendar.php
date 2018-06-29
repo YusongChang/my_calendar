@@ -26,7 +26,7 @@
 			
 			table, th
 			{	
-				text-align:center;
+					text-align:center;
     				border: 1px solid black;
     				border-radius:5px;
 			}
@@ -40,13 +40,14 @@
 	</head>
 	<body>
 		<div align='center'>
-			<p style="font-size:100px; margin:5px auto;">
+			<p style="font-size:100px; margin:3px 0 3px 0; padding: 2px 0 0 0;">
                 <?php echo $current_year.' 年 '. $current_month.' 月 ';?>
             </p>
 			
-			<p align = "center" style="font-size:45px;margin:1px 0 5px 0;">
+			<p align = "center" style="font-size:45px;margin: 1px 0 5px 0;padding: 0 0 20px 0;">
 				<?php 
 					$lunarDate  = new Gregorian2Lunar($current_year, $current_month, $current_day);
+					$lunarDate->getLunarDateTime();
 				?>
 			</p>
 
