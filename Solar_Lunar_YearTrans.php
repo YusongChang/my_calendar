@@ -218,7 +218,6 @@
             return $this->lunarData[$y] & 0xf ? true : false;
         }
 
-
         public function daysInLunarMonth($y,$m)
         {
             //指定年 - 基準年 = 陣列索引值
