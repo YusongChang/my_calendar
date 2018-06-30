@@ -224,19 +224,14 @@
             //指定年 - 基準年 = 陣列索引值
             //Ex. 1901 -1900 = 1
             $y -= $this->startYear;
+            //取得需位移的位數,若是 1月份 則不用位移
+            $m -= 1;
             //基準年 二進制 表示 :  0001 0100 1011 1101 1000
             $count = 0x8000; //1000 0000 0000 0000 用以判斷 月份的天數
+            //16位 2進制 向右 位移 取得月份天數
+            $count >>= $m; 
             
-            //取出指定用月份的天數
-            $lunarDays = 0;
-            for($i=0; $i < $m && $count > 0x8 ; $i++) 
-            {   
-                // 1 代表 30天 為 true，0 代表 29 天 為 false 
-                $lunarDays = $count & $this->lunarData[$y] ? 30 : 29;
-                $count >>= 1;
-            }
-
-            return $lunarDays;
+            return $count & $this->lunarData[$y] ? 30 : 29;
         }
 
         public function monthsInLunarYear($y)
