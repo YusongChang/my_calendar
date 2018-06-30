@@ -108,7 +108,7 @@
             $this->gap_days -=1;
 
             //echo  $m.'---'.$this->gap_days.'---'. '$this->gap_days<br />';
-            //最後 + (指定日期 日) 就可得知從基準日期 到 指定日期的一共間隔幾天了(須1 天)! ^_^
+            //最後 + (指定日期 日) 就可得知從基準日期 到 指定日期的一共間隔幾天了(須 -1 天)! ^_^
             echo  $this->gap_days.'---'. '$this->gap_days+FOR<br />';
             $this->gap_days += ($this->gregorianDay-1);
             echo  $this->gap_days.'---'. '$this->gap_days+DATE-1<br />';
