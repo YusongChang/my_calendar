@@ -289,9 +289,8 @@
         {
             $chWord = ['初','一','二','三','四','五','六','七','八','九','十','廿'];
             $date="農曆 {$this->lunarYear} 年 ";
-            
-            $this->lunarMonth == 1 ? $date='正月 '  : '';
 
+            //月份漢字
             if($this->lunarMonth > 10) //獲得 字元 ' 十 '
             {
                 $m = $this->lunarMonth - 10;
@@ -301,6 +300,8 @@
             {   //若等於 正月 就不顯示月份
                 ($this->lunarMonth <> 1) ? $date.= $chWord[$this->lunarMonth].' 月 ' : '';
             }
+            // 一月 漢字
+            $this->lunarMonth == 1 ? $date='正月 '  : '';
 
             if($this->lunarDay < 11)
             {   
@@ -310,16 +311,16 @@
             else if($this->lunarDay < 30)
             {
                 $m = intval($this->lunarDay / 10); //取得天數的 10位數
-                $d =  $this->lunarDay % 10; //取得天數的 個位數'
+                $d =  $this->lunarDay % 10; //取得天數的 個位數
                
-                //10位數 轉 為 漢字
+                //10位數 轉 為 漢字 10、20  
                 $date .= ($m == 1) ? '十':'廿';
                 //加上 個位數 的 漢字;
                 $date .= $chWord[$d];
                 $date .=' 日';
             }
             else
-            {
+            {   //30日漢字
                 $date .= '三十 日';
             }
             
