@@ -66,14 +66,14 @@
        */
         public function init($y,$m,$d)
         {
-            /*驗證用 :
+            //驗證用 :
             $basedate='1900-1-31';//参照日期
             $timezone='PRC';
             $datetime= new DateTime($basedate, new DateTimeZone($timezone));
             $curTime=new DateTime('2018-6-28', new DateTimeZone($timezone));
             $offset   = ($curTime->format('U') - $datetime->format('U'))/86400; //相差的天数
             $offset=ceil($offset);
-            echo '驗證間隔天數: '.$offset.'<br />';*/
+            echo '驗證間隔天數: '.$offset.'<br />';
 
             $this->gregorianYear = $y;
             $this->gregorianMonth = $m;
@@ -87,13 +87,14 @@
                 $this->gap_days += 365; //平年天數
                 if($this->isGregorianLeapYear($y)) $this->gap_days++ ;//是閏年 故加多一天
                
-                //計算農曆1900年~指定年前共 有多少個月份
+                /*//計算農曆1900年~指定年前共 有多少個月份
                 $this->monthsInLunarYear += $this->monthsInLunarYear($y);
-                //計算農曆幾月幾日
+                //計算農曆幾月幾日*/
              }
-             
+             echo  $this->gap_days.'---'. '$this->gap_days<br />';
+            
              $this->gap_days -= $this->startDay; // 從 31 日算起 故 減去 31  天(注意這是算間隔 不是總共幾天)
-             //echo  $this->gap_days.'---'. '$this->gap_days<br />';
+             echo  $this->gap_days.'---'. '$this->gap_days-31<br />';
             
              /**
             *從上方得到 "間隔多少天" 需再 + (指定日期 距離該年 1月1日 的天數)
@@ -101,15 +102,16 @@
             */
             for($m = $this->startMonth; $m < $this->gregorianMonth ; $m++)
             {
-                //得到 基準年 1900-1-31 到 指定日期 過去多少天 
-                $this->gap_days += $this->daysInGregorianMonth($this->gregorianYear,$m); 
-                
-            }
+                //得到 基準年 1900-1-31 到 指定日期間隔多少天 (須 -1 天)
+                $this->gap_days += ($this->daysInGregorianMonth($this->gregorianYear,$m)); 
+            } 
+            $this->gap_days -=1;
 
             //echo  $m.'---'.$this->gap_days.'---'. '$this->gap_days<br />';
-            //最後 + (指定日期 日) 就可得知從基準日期 到 指定日期的是第 幾 天了! ^_^
-            $this->gap_days += ($this->gregorianDay - 1);
-            //echo  '---'.$this->gap_days.'---'. '$this->gap_days<br />';
+            //最後 + (指定日期 日) 就可得知從基準日期 到 指定日期的一共間隔幾天了(須1 天)! ^_^
+            echo  $this->gap_days.'---'. '$this->gap_days+FOR<br />';
+            $this->gap_days += ($this->gregorianDay-1);
+            echo  $this->gap_days.'---'. '$this->gap_days+DATE-1<br />';
             
             /**
             *計算 指定日期 是農曆 幾月 幾日
@@ -316,7 +318,7 @@
                 //10位數 轉 為 漢字 10、20  
                 $date .= ($m == 1) ? '十':'廿';
                 //加上 個位數 的 漢字;
-                $date .= $chWord[$d];
+                $date .= $chWord[$d+1];
                 $date .=' 日';
             }
             else
